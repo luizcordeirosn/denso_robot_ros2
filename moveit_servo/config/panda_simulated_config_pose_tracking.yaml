@@ -18,7 +18,6 @@ scale:
 ## Properties of outgoing commands
 publish_period: 0.01  # 1/Nominal publish rate [seconds]
 max_expected_latency: 0.1  # delay between sending a command and the robot executing it [seconds]
-low_latency_mode: false  # Set this to true to publish as soon as an incoming Twist command is received (publish_period is ignored)
 
 # What type of topic does your robot driver expect?
 # Currently supported are std_msgs/Float64MultiArray or trajectory_msgs/JointTrajectory
@@ -32,19 +31,13 @@ publish_joint_accelerations: false
 ## Plugins for smoothing outgoing commands
 smoothing_filter_plugin_name: "online_signal_smoothing::ButterworthFilterPlugin"
 
-# If is_primary_planning_scene_monitor is set to true, the Servo server's PlanningScene advertises the /get_planning_scene service,
-# which other nodes can use as a source for information about the planning environment.
-# NOTE: If a different node in your system is responsible for the "primary" planning scene instance (e.g. the MoveGroup node),
-# then is_primary_planning_scene_monitor needs to be set to false.
-is_primary_planning_scene_monitor: false
-
 ## MoveIt properties
-move_group_name:  arm  # Often 'manipulator' or 'arm'
-planning_frame: base_link  # The MoveIt planning frame. Often 'base_link' or 'world'
+move_group_name:  panda_arm  # Often 'manipulator' or 'arm'
+planning_frame: panda_link0  # The MoveIt planning frame. Often 'base_link' or 'world'
 
 ## Other frames
-ee_frame_name: J6  # The name of the end effector link, used to return the EE pose
-robot_link_command_frame:  base_link  # commands must be given in the frame of a robot link. Usually either the base or end effector
+ee_frame_name: panda_hand  # The name of the end effector link, used to return the EE pose
+robot_link_command_frame:  panda_hand  # commands must be given in the frame of a robot link. Usually either the base or end effector
 
 ## Stopping behaviour
 incoming_command_timeout:  0.1  # Stop servoing if X seconds elapse without a new command
@@ -63,7 +56,7 @@ cartesian_command_in_topic: ~/delta_twist_cmds  # Topic for incoming Cartesian t
 joint_command_in_topic: ~/delta_joint_cmds # Topic for incoming joint angle commands
 joint_topic: /joint_states
 status_topic: ~/status # Publish status to this topic
-command_out_topic: /denso_joint_trajectory_controller/joint_trajectory # Publish outgoing commands here
+command_out_topic: /panda_arm_controller/joint_trajectory # Publish outgoing commands here
 
 ## Collision checking for the entire robot body
 check_collisions: true # Check collisions?
